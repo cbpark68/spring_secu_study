@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;mytest03/src/main/webapp/WEB-INF/erd/create.sql&apos; to &apos;insert.sql&apos;" description="Rename resource &apos;create.sql&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/WEB-INF/erd/create.sql" name="insert.sql" stamp="1644063400628" updateReferences="true"/>
+</session>

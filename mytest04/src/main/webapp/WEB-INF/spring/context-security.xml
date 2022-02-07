@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+	<!-- URL 설정 -->
+	<http use-expressions="true">
+		<intercept-url pattern="/login/loginForm.do" access="permitAll" />
+		<intercept-url pattern="/home.do" access="permitAll" />
+		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
+		<intercept-url pattern="/**" access="hasAnyRole('ROLE_USER, ADMIN')" />
+
+		<form-login login-page="/login/loginForm.do" default-target-url="/home.do" authentication-failure-url="/login/loginForm.do?error" username-parameter="uid" password-parameter="password" />
+		<logout logout-url="/logout" logout-success-url="/home.do" />
+		<access-denied-handler error-page="/login/accessDenied.do" />
+	</http>
+
+
+	<!-- BCryptPasswordEncoder 클래스 빈 추가 -->
+	<beans:bean id="bcryptPasswordEncoder" 
+	        class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="securityService" >
+		     <!-- 로그인 시 비밀번호를 암호화해서 DB에서 조회한 비밀번호와 비교 -->
+		    <password-encoder ref="bcryptPasswordEncoder"/>
+		</authentication-provider>
+	</authentication-manager>
+
+	<beans:bean id="securityService" class="com.spring.secu04.ex01.UserJdbcDaoImpl">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="rolePrefix" value="" />
+		<beans:property name="usersByUsernameQuery">
+			<beans:value>
+				SELECT username, password, enabled
+				FROM tbl_users
+				WHERE username = ?
+			</beans:value>
+		</beans:property>
+		<beans:property name="authoritiesByUsernameQuery">
+			<beans:value>
+				SELECT username, authority
+				FROM tbl_authorities
+				WHERE username = ?
+			</beans:value>
+		</beans:property>
+		<beans:property name="enableGroups" value="false" />
+	</beans:bean>
+
+</beans:beans>

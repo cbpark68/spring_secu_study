@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="DDLWizard">
+		<item key="schema" value="false"/>
+		<item key="drop" value="false"/>
+		<item key="alterTable" value="true"/>
+		<item key="comment" value="true"/>
+		<item key="encoding" value="UTF-8"/>
+	</section>
+</section>
