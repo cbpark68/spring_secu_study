@@ -10,3 +10,5 @@ local.properites
 .settings/
 .loadpath
 .recommenders
+*.class
+*.MF
