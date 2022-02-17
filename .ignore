@@ -12,3 +12,4 @@ local.properites
 .recommenders
 *.class
 *.MF
+*/target/*
